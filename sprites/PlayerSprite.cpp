@@ -9,7 +9,7 @@ PlayerSprite::PlayerSprite(const std::string& textureFile, int frameWidth, int f
 
     // Divide the spritesheet into frames
     for (int i = 0; i < numFrames; ++i) {
-        frames.push_back(sf::IntRect(0, i * frameWidth, frameWidth, frameHeight));
+        frames.push_back(sf::IntRect(i * frameWidth, 0, frameWidth, frameHeight));
     }
     sprite.setTextureRect(frames[0]);
     sprite.setOrigin(frameWidth / 2.0f, frameHeight / 2.0f); // Set origin to the center of the frame

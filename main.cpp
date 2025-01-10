@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "sprites/PlayerSprite.h"
 #include "sprites/GameMapSprite.h"
 
@@ -13,11 +14,22 @@ int main() {
     window.setFramerateLimit(60);
 
     // Initialize player
-    PlayerSprite player("../textures/player/DogWalk.png", 52, 32, 10); // Assuming each frame is 52x32, 10 frames in one column
+    PlayerSprite player("../textures/player/DogWalking.png", 68, 34, 10); // Assuming each frame is 68x34, 10 frames in one row
     player.setPosition(WINDOW_WIDTH / 2.0f, 500.0f); // Ground level
 
     // Initialize game map
     GameMapSprite gameMap;
+
+    // Load sound buffer
+    sf::SoundBuffer buffer;
+    if (!buffer.loadFromFile("../sounds/player/jumpland.wav")) {
+        // Handle error
+        return -1;
+    }
+
+    // Create sound
+    sf::Sound sound;
+    sound.setBuffer(buffer);
 
     // Clock for delta time
     sf::Clock clock;
@@ -34,6 +46,7 @@ int main() {
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             player.jump();
+            sound.play(); // Play sound when jumping
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
             movement.x -= PLAYER_SPEED * deltaTime.asSeconds();
